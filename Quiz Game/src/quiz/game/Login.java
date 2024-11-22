@@ -6,8 +6,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Login extends JFrame implements ActionListener{
-    // Globally declare JButtons
+    // Globally declare buttons
     JButton rules,back;
+    
+    // Globally declare text field
+    JTextField tfName;  // so that the value entered can be accessed from another class
     
     // Default Constructor
     Login(){
@@ -53,7 +56,7 @@ public class Login extends JFrame implements ActionListener{
         name.setForeground(Color.BLUE); // Light blue
         
         // Insert a input text field
-        JTextField tfName=new JTextField();
+        tfName=new JTextField();
         tfName.setBounds(695,200,320,50);
         
         // Decorate the text inside textfield (font family,style,size)
@@ -103,14 +106,21 @@ public class Login extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource() == rules){
-            System.out.println("Rules 2");
+            String name=tfName.getText(); // Get the value entered in textfield
+            
+            // Close current frame
+            setVisible(false);
+            
+            // Pass the entered name to another class
+            new Rules(name);
+            
         }
         else if(ae.getSource() == back){
             System.out.println("Back");
             setVisible(false);
         }
     }
-    
+     
     // Main method
     public static void main(String[]args){
         new Login(); // Anonymous object (calls default constructor)
