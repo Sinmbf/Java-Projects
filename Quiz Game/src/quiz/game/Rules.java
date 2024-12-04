@@ -6,16 +6,19 @@ import java.awt.event.*;
 
 public class Rules extends JFrame implements ActionListener{
     
-    // Global variable
+    // Instance variable
     String name;
     JButton back,start;
     
     // Default Constructor
     Rules(String name){
+        // Set title of the frame
+        setTitle("Rules");
+        
         this.name=name;
         // Launch a frame when the class runs at the beginning
             // getContentPane() => grab the whole frame
-            // setBackground() => set background color for frame
+            // setBackground() => set backg        getContentPane().setBackground(Color.WHITE);round color for frame
         getContentPane().setBackground(Color.WHITE);
         
         // Set the layout for the frame
@@ -105,7 +108,7 @@ public class Rules extends JFrame implements ActionListener{
             
         }
         else{
-            // Close current frame
+            // Make current frame hidden
             setVisible(false);
             new Login();
         }

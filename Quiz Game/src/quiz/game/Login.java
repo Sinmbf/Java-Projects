@@ -14,6 +14,9 @@ public class Login extends JFrame implements ActionListener{
     
     // Default Constructor
     Login(){
+        // Set ttiel of the frame (inheritated method)
+        setTitle("Login");
+        
         // Launch a frame when the class runs at the beginning
             // getContentPane() => grab the whole frame
             // setBackground() => set background color for frame
@@ -26,13 +29,13 @@ public class Login extends JFrame implements ActionListener{
         ImageIcon i1=new ImageIcon(ClassLoader.getSystemResource("icons/login.jpeg"));
         
         // Place the image on the frame using add()
-        JLabel image=new JLabel(i1); // can't pass object to add directly so use JLabel class
+        JLabel image=new JLabel(i1); // can't pass object to add() directly so use JLabel class
         
         // Create our own layout
         image.setBounds(0,0,600,500);  // (left,top,width,height)
         add(image); // Add image on frame
         
-        // Write something on frame then use JLabel
+        // Write something on frame by using JLabel
         // For heading
         JLabel heading=new JLabel("Lost Quiz");
         heading.setBounds(750,60,300,45);
@@ -84,7 +87,7 @@ public class Login extends JFrame implements ActionListener{
         back.setBounds(913,265,100,35);
         
         // Change button background and font color
-        back.setBackground(new Color(138, 43, 226));
+        back.setBackground(new Color(138, 43, 226)); // Purple
         back.setForeground(Color.BLACK);
         back.setContentAreaFilled(true); // Allow custom background to render
         back.setOpaque(true);
@@ -99,8 +102,6 @@ public class Login extends JFrame implements ActionListener{
         setSize(1100,500); // Adjust size of frame(width, height)
         setLocation(100,100); // Adjust position of frame (left,right)
         setVisible(true); // By default, JFrame is invisible
-        
-        
     }
     
     @Override
