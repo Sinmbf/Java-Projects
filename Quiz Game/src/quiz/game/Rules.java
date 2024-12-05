@@ -7,15 +7,15 @@ import java.awt.event.*;
 public class Rules extends JFrame implements ActionListener{
     
     // Instance variable
-    String name;
+    String username;
     JButton back,start;
     
     // Default Constructor
-    Rules(String name){
+    Rules(String username){
         // Set title of the frame
         setTitle("Rules");
         
-        this.name=name;
+        this.username=username;
         // Launch a frame when the class runs at the beginning
             // getContentPane() => grab the whole frame
             // setBackground() => set backg        getContentPane().setBackground(Color.WHITE);round color for frame
@@ -26,7 +26,7 @@ public class Rules extends JFrame implements ActionListener{
         
         // Write something on frame then use JLabel
         // For heading
-        JLabel heading=new JLabel("Welcome " + name + " to Lost Quiz");
+        JLabel heading=new JLabel("Welcome " + username + " to Lost Quiz");
         heading.setBounds(110,40,600,45);
         
         // Decorate the heading (font family,style,size)
@@ -38,7 +38,7 @@ public class Rules extends JFrame implements ActionListener{
         
         // For list of rules
         JLabel listOfRules=new JLabel();
-        listOfRules.setBounds(20,80,600,500);
+        listOfRules.setBounds(20,50,600,500);
         
         // Decorate the list of rules (font family,style,size)
         listOfRules.setFont(new Font("Times New roman",Font.PLAIN,20)); 
@@ -46,14 +46,14 @@ public class Rules extends JFrame implements ActionListener{
         // Set texts dynamically
         listOfRules.setText(
             "<html>"+ 
-                "1. You are trained to be a programmer and not a story teller, answer point to point" + "<br><br>" +
-                "2. Do not unnecessarily smile at the person sitting next to you, they may also not know the answer" + "<br><br>" +
-                "3. You may have lot of options in life but here all the questions are compulsory" + "<br><br>" +
-                "4. Crying is allowed but please do so quietly." + "<br><br>" +
-                "5. Only a fool asks and a wise answers (Be wise, not otherwise)" + "<br><br>" +
-                "6. Do not get nervous if your friend is answering more questions, may be he/she is doing Jai Mata Di" + "<br><br>" +
-                "7. Brace yourself, this paper is not for the faint hearted" + "<br><br>" +
-                "8. May you know more than what John Snow knows, Good Luck" + "<br><br>" +
+                "1. There are 10 questions with four options each." + "<br><br>" +
+                "2. You get 15 seconds to answer each question." + "<br><br>" +
+                "3. If you fail to answer within 15 seconds, the question will be skipped." + "<br><br>" +
+                "4. Score starts from 0. You get 10 score for every correct answer." + "<br><br>" +
+                "5. 50-50 lifeline can be used for maximum 2 times." + "<br><br>" +
+                "6. Click next button to view the next question." + "<br><br>" +
+                "7. Click submit button after answering every question." + "<br><br>" +
+                "8. After clicking submit, your total score will be displayed." + 
             "<html>"
 );
         add(listOfRules);
@@ -63,13 +63,14 @@ public class Rules extends JFrame implements ActionListener{
         
         // Create back button
         back=new JButton("Back");
-        back.setBounds(180,576,100,35);
+        back.setBounds(180,550,112,40);
         
         // Change button background and font color
         back.setBackground(new Color(138, 43, 226));
-        back.setForeground(Color.BLACK);
+        back.setForeground(new Color(138,43,226));
         back.setContentAreaFilled(true); // Allow custom background to render
         back.setOpaque(true);
+        back.setFont(new Font("Futura",Font.BOLD,26));
         
         // Add click event on button
         back.addActionListener(this);
@@ -80,13 +81,14 @@ public class Rules extends JFrame implements ActionListener{
         
         // Create Start button
         start=new JButton("Start");
-        start.setBounds(350,576,100,35);
+        start.setBounds(350,550,112,40);
         
         // Change button background and font color
         start.setBackground(new Color(138, 43, 226));
-        start.setForeground(Color.BLACK);
+        start.setForeground(new Color(138,43,226));
         start.setContentAreaFilled(true); // Allow custom background to render
         start.setOpaque(true);
+        start.setFont(new Font("Futura",Font.BOLD,26));
         
         // Add click event on button
         start.addActionListener(this);
@@ -105,6 +107,12 @@ public class Rules extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource() == start){
+            
+            // Hide current frame
+            setVisible(false);
+            
+            // Show Quiz frame
+            new Quiz(username);
             
         }
         else{

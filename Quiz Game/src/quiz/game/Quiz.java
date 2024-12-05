@@ -6,28 +6,25 @@ import java.awt.event.*;
 
 public class Quiz extends JFrame implements ActionListener{
     // Instance variables
-    
     // Globally declare variables
     JLabel qno, question;
     JRadioButton opt1, opt2, opt3, opt4;
     ButtonGroup groupOptions;
     JButton nextBtn,lifelineBtn,submitBtn;
+    String username;
     
     // Static timer field
     // For tracking timer
-    public static int timer = 16;
-    
-    // For tracking answer given or not
-    public static boolean isAnsGiven=false;
+    public int timer = 16;
     
     // For tracking question count
-    public static int count=0;
+    public int count=0;
     
     // For tracking count of lifeline used
-    public static int lifelineCount=0;
+    public int lifelineCount=0;
     
     // For tracking total score of user
-    public static int totalScore=0;
+    public int totalScore=0;
     
     // For questions => 10 questions(10 rows), each question 4 answers(4+1 columns)
     String questions[][] = new String[10][5]; // 10 questions
@@ -39,7 +36,10 @@ public class Quiz extends JFrame implements ActionListener{
     String userAns[][]=new String[10][1];
     
     // Default Constructor
-    Quiz() {
+    Quiz(String username) {
+        
+        this.username=username;
+        
         // Set title of the frame
         setTitle("Quiz");
         
@@ -81,6 +81,7 @@ public class Quiz extends JFrame implements ActionListener{
         // Create a custom panel for the timer
         TimerPanel timerPanel = new TimerPanel();
         timerPanel.setBounds(800, 420, 500, 40);  // Set bounds for the timer display
+        timerPanel.setBackground(Color.WHITE);
         add(timerPanel);  // Add the timer panel to the frame
         
          // Timer to decrease the timer and update every second
@@ -180,7 +181,7 @@ public class Quiz extends JFrame implements ActionListener{
         // Option 1
         opt1=new JRadioButton();
         opt1.setBounds(135,420,500,30);
-        opt1.setBackground(Color.DARK_GRAY);
+        opt1.setBackground(Color.WHITE);
         opt1.setOpaque(true);
         opt1.setFont(new Font("Dialog",Font.PLAIN,18));
         
@@ -191,7 +192,7 @@ public class Quiz extends JFrame implements ActionListener{
         // Option 2
         opt2=new JRadioButton();
         opt2.setBounds(135,460,500,30);
-        opt2.setBackground(Color.DARK_GRAY);
+        opt2.setBackground(Color.WHITE);
         opt2.setOpaque(true);
         opt2.setFont(new Font("Dialog",Font.PLAIN,18));
         
@@ -202,7 +203,7 @@ public class Quiz extends JFrame implements ActionListener{
         // Option 3
         opt3=new JRadioButton();
         opt3.setBounds(135,500,500,30);
-        opt3.setBackground(Color.DARK_GRAY);
+        opt3.setBackground(Color.WHITE);
         opt3.setOpaque(true);
         opt3.setFont(new Font("Dialog",Font.PLAIN,18));
         
@@ -213,7 +214,7 @@ public class Quiz extends JFrame implements ActionListener{
         // Option 4
         opt4=new JRadioButton();
         opt4.setBounds(135,540,500,30);
-        opt4.setBackground(Color.DARK_GRAY);
+        opt4.setBackground(Color.WHITE);
         opt4.setOpaque(true);
         opt4.setFont(new Font("Dialog",Font.PLAIN,18));
         
@@ -286,6 +287,7 @@ public class Quiz extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource()==nextBtn){
+            timer=16;
             repaint();
             
             // Only enable lifeline button if used less than 2 times
@@ -299,8 +301,13 @@ public class Quiz extends JFrame implements ActionListener{
             opt3.setEnabled(true);
             opt4.setEnabled(true);
             
+            // Change color back to normal
+            opt1.setOpaque(false);
+            opt2.setOpaque(false);
+            opt3.setOpaque(false);
+            opt4.setOpaque(false);
+            
             // Set Answer given
-            isAnsGiven=true;
             if(groupOptions.getSelection()==null){
                 userAns[count][0]="";
             }
@@ -325,11 +332,20 @@ public class Quiz extends JFrame implements ActionListener{
             if(count==0 || count==2 || count==4 || count==6 || count==7){
                 opt1.setEnabled(false);
                 opt4.setEnabled(false);
+                opt1.setBackground(Color.RED);
+                opt4.setBackground(Color.RED);
+                opt1.setOpaque(true);
+                opt4.setOpaque(true);
+                
             }
             // 2, 4, 6, 9, 10
             else{
                 opt2.setEnabled(false);
                 opt3.setEnabled(false);
+                opt2.setBackground(Color.RED);
+                opt3.setBackground(Color.RED);
+                opt2.setOpaque(true);
+                opt3.setOpaque(true);
             }
             
             // Disable lifeline button
@@ -337,7 +353,29 @@ public class Quiz extends JFrame implements ActionListener{
             
         }
         else{
-            System.out.println("Submit");
+            
+            // Check if answer is given
+            if(groupOptions.getSelection()==null){  // No answer selected
+                userAns[count][0]="";
+            }
+            else{
+                // Get the answer given by user and insert in array
+                userAns[count][0]=groupOptions.getSelection().getActionCommand();
+            }
+                    
+            // Check the answers given by user and assign total score
+            for(int i=0;i<userAns.length;i++){
+                if(userAns[i][0].equals(correctAns[i][0])){
+                    totalScore+=10;
+                }
+            }
+            System.out.println(totalScore); 
+            
+            // Hide current frame
+            setVisible(false);
+            
+            // Show score frame
+            new Score(username,totalScore);
         }
     }
 
@@ -356,80 +394,8 @@ public class Quiz extends JFrame implements ActionListener{
             }
             else{
                 g.drawString("Time is Up!!",10,30);
-            }
-            
-            // Check if answer is given by the user in time or not
-            if(isAnsGiven){
-                isAnsGiven=false;
-                timer=16;
-            }
-            else if(timer==0){
-                timer=16;
-                
-                // Only enable lifeline button if used less than 2 times
-                if(lifelineCount<2){
-                    lifelineBtn.setEnabled(true);
-                }
-            
-                // Enable option button if in case disabled
-                opt1.setEnabled(true);
-                opt2.setEnabled(true);
-                opt3.setEnabled(true);
-                opt4.setEnabled(true);
-                
-                // Enable option button if in case disabled
-                opt1.setEnabled(true);
-                opt2.setEnabled(true);
-                opt3.setEnabled(true);
-                opt4.setEnabled(true);
-                
-                // If last question, but not selected ans then disable next btn
-                if(count==9){
-                    nextBtn.setEnabled(false);
-                    submitBtn.setEnabled(true);
-                }
-                
-                // If time over for last question but still not clicked submit
-                if(count==9){
-                    // Check if answer is given
-                    if(groupOptions.getSelection()==null){  // No answer selected
-                        userAns[count][0]="";
-                    }
-                    else{
-                        // Get the answer given by user and insert in array
-                        userAns[count][0]=groupOptions.getSelection().getActionCommand();
-                    }
-                    
-                    // Check the answers given by user and assign total score
-                    for(int i=0;i<userAns.length;i++){
-                        if(userAns[i][0].equals(correctAns[i][0])){
-                            totalScore+=10;
-                        }
-                    }
-                    
-                    // Hide current frame and show score frame
-                    setVisible(false);
-                    
-                    // Score frame
-                    System.out.println(totalScore);
-                }
-                
-                // If next btn is not clicked after given time
-                else{
-                    // Check if answer is given
-                    if(groupOptions.getSelection()==null){  // No answer selected
-                        userAns[count][0]="";
-                    }
-                    else{
-                        // Get the answer given by user and insert in array
-                        userAns[count][0]=groupOptions.getSelection().getActionCommand();
-                        System.out.println(userAns[count][0]);
-                    }
-                    // Show next question
-                    count++;
-                    startQuiz(count);
-                }
-            }
+                handleTimeUp();
+            }    
             
         }
     }
@@ -454,8 +420,75 @@ public class Quiz extends JFrame implements ActionListener{
         // Reset the selection
         groupOptions.clearSelection();
     }
+    
+    // Method to Handle what happens when time runs out
+    private void handleTimeUp() {
+        if (timer == 0) {
+            timer = 16; // Reset timer for next round
+            
+            // Only enable lifeline button if used less than 2 times
+            if(lifelineCount<2){
+                lifelineBtn.setEnabled(true);
+            }
+            
+            // Enable option button if in case disabled
+            opt1.setEnabled(true);
+            opt2.setEnabled(true);
+            opt3.setEnabled(true);
+            opt4.setEnabled(true);
+            
+            // Change color back to normal
+            opt1.setOpaque(false);
+            opt2.setOpaque(false);
+            opt3.setOpaque(false);
+            opt4.setOpaque(false);
+            
+            // Enable the next button and handle user input if not already answered
+            if (count < 9) {
+                
+                // Check if answer is given
+                if(groupOptions.getSelection()==null){  // No answer selected
+                    userAns[count][0]="";
+                }
+                else{
+                    // Get the answer given by user and insert in array
+                    userAns[count][0]=groupOptions.getSelection().getActionCommand();
+                }
+                    
+                // Show next question
+                count++;
+                startQuiz(count);
+            } else {
+                // Submit the quiz if it's the last question
+                nextBtn.setEnabled(false);
+                submitBtn.setEnabled(true);
+                
+                // Check if answer is given
+                if(groupOptions.getSelection()==null){  // No answer selected
+                    userAns[count][0]="";
+                }
+                else{
+                    // Get the answer given by user and insert in array
+                    userAns[count][0]=groupOptions.getSelection().getActionCommand();
+                }
+                    
+                // Check the answers given by user and assign total score
+                for(int i=0;i<userAns.length;i++){
+                    if(userAns[i][0].equals(correctAns[i][0])){
+                        totalScore+=10;
+                    }
+                }
+                    
+                // Hide current frame
+                Quiz.this.setVisible(false);
+                    
+                // Show score frame
+                new Score(username,totalScore);
+            }
+        }
+    }
 
     public static void main(String[] args) {
-        new Quiz(); // Create and display the quiz
+        new Quiz("User"); // Create and display the quiz
     }
 }

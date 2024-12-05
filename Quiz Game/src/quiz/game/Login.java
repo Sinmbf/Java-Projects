@@ -68,11 +68,12 @@ public class Login extends JFrame implements ActionListener{
         
         // Create Rules button
         rules=new JButton("Rules");
-        rules.setBounds(698,265,100,35);
+        rules.setBounds(698,265,112,40);
         
         // Change button background and font color
         rules.setBackground(new Color(138, 43, 226));
         rules.setForeground(Color.BLACK);
+        rules.setFont(new Font("Futura",Font.PLAIN,25));
         rules.setContentAreaFilled(true); // Allow custom background to render
         rules.setOpaque(true);
         // Add click event on button
@@ -84,11 +85,12 @@ public class Login extends JFrame implements ActionListener{
         
         // Create Back button
         back=new JButton("Back");
-        back.setBounds(913,265,100,35);
+        back.setBounds(905,265,112,40);
         
         // Change button background and font color
         back.setBackground(new Color(138, 43, 226)); // Purple
         back.setForeground(Color.BLACK);
+        back.setFont(new Font("Futura",Font.PLAIN,25));
         back.setContentAreaFilled(true); // Allow custom background to render
         back.setOpaque(true);
         // Add click event on button

@@ -93,6 +93,70 @@ Find below the Answers Array of the above Questions
         answers[7][1] = "Java Archive";
         answers[8][1] = "java.lang.StringBuilder";
         answers[9][1] = "Bytecode is executed by JVM";
+
+
+
+// Check if answer is given by the user in time or not
+            if(isAnsGiven){
+                isAnsGiven=false;
+                timer=16;
+            }
+            else if(timer==0){
+                timer=16;
+                
+                // Only enable lifeline button if used less than 2 times
+                if(lifelineCount<2){
+                    lifelineBtn.setEnabled(true);
+                }
+            
+                // Enable option button if in case disabled
+                opt1.setEnabled(true);
+                opt2.setEnabled(true);
+                opt3.setEnabled(true);
+                
+                // If last question, but not clicked next or submit then disable next btn
+                if(count==9){
+                    nextBtn.setEnabled(false);
+                    submitBtn.setEnabled(true);
+                    
+                    // Check if answer is given
+                    if(groupOptions.getSelection()==null){  // No answer selected
+                        userAns[count][0]="";
+                    }
+                    else{
+                        // Get the answer given by user and insert in array
+                        userAns[count][0]=groupOptions.getSelection().getActionCommand();
+                    }
+                    
+                    // Check the answers given by user and assign total score
+                    for(int i=0;i<userAns.length;i++){
+                        if(userAns[i][0].equals(correctAns[i][0])){
+                            totalScore+=10;
+                        }
+                    }
+                    
+                    // Hide current frame
+                    Quiz.this.setVisible(false);
+                    
+                    // Show score frame
+                    new Score(username,totalScore);
+                }
+                
+                // If next btn is not clicked after given time
+                else{
+                    // Check if answer is given
+                    if(groupOptions.getSelection()==null){  // No answer selected
+                        userAns[count][0]="";
+                    }
+                    else{
+                        // Get the answer given by user and insert in array
+                        userAns[count][0]=groupOptions.getSelection().getActionCommand();
+                    }
+                    // Show next question
+                    count++;
+                    startQuiz(count);
+                }
+            }
         
 
 
