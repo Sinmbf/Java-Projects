@@ -119,7 +119,6 @@ public class Login extends JFrame implements ActionListener{
             
         }
         else if(ae.getSource() == back){
-            System.out.println("Back");
             setVisible(false);
         }
     }
