@@ -38,7 +38,7 @@ public class Quiz extends JFrame implements ActionListener {
 
     QuestionsAndAnswers qa = new QuestionsAndAnswers();
 
-    // Default Constructor
+    // Parameterized Constructor
     Quiz(String username) {
 
         this.username = username;

@@ -112,7 +112,7 @@ public class Score extends JFrame implements ActionListener{
     }
     
     public static void main(String[]args){
-        new Score("Siddhartha", 0);  // Anonymous object
+        new Score("User", 0);  // Anonymous object
     }
 }
 
