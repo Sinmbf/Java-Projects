@@ -12,7 +12,13 @@ public class Quiz extends JFrame implements ActionListener {
     JRadioButton opt1, opt2, opt3, opt4;
     ButtonGroup groupOptions;
     JButton nextBtn, lifelineBtn, submitBtn;
-    String username;
+    String username,playDate,playTime;
+    
+    // Create an instance of rules class
+    Rules rules=new Rules();
+    
+    // Create an instance of user details class
+    UserDetails userDetails=new UserDetails();
 
     // Static timer field
     // For tracking timer
@@ -39,9 +45,11 @@ public class Quiz extends JFrame implements ActionListener {
     QuestionsAndAnswers qa = new QuestionsAndAnswers();
 
     // Parameterized Constructor
-    Quiz(String username) {
+    Quiz(String username, String playDate, String playTime) {
 
         this.username = username;
+        this.playDate=playDate;
+        this.playTime=playTime;
 
         // Set title of the frame
         setTitle("Quiz");
@@ -99,6 +107,9 @@ public class Quiz extends JFrame implements ActionListener {
         });
         countdownTimer.start();  // Start the countdown timer
 
+        // Define what happens after closing the frame
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         // Set frame visibility
         setVisible(true);
     }
@@ -300,6 +311,8 @@ public class Quiz extends JFrame implements ActionListener {
 
             // Hide current frame
             setVisible(false);
+            userDetails.saveScores(username,totalScore,playDate,playTime);
+            userDetails.readScores();
 
             // Show score frame
             new Score(username, totalScore);
@@ -407,9 +420,13 @@ public class Quiz extends JFrame implements ActionListener {
                         totalScore += 10;
                     }
                 }
+                
+                System.out.println("Submitted");
+                System.out.println(playDate);
 
                 // Hide current frame
                 Quiz.this.setVisible(false);
+                
 
                 // Show score frame
                 new Score(username, totalScore);
@@ -418,6 +435,6 @@ public class Quiz extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new Quiz("User"); // Create and display the quiz
+        new Quiz("User", null, null); // Create and display the quiz
     }
 }

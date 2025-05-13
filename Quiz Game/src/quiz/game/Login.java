@@ -103,6 +103,8 @@ public class Login extends JFrame implements ActionListener {
         back.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // Manage the frame
+        // Define what happens after closing the frame
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1100, 500); // Adjust size of frame(width, height)
         setLocation(100, 100); // Adjust position of frame (left,right)
         setVisible(true); // By default, JFrame is invisible

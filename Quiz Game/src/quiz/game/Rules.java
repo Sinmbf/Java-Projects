@@ -3,15 +3,18 @@ package quiz.game;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Rules extends JFrame implements ActionListener {
 
     // Instance variable
     String username;
     JButton back, start;
-    
+
     // Default Constructor
-    Rules(){
+    Rules() {
         this("User");
     }
 
@@ -102,13 +105,13 @@ public class Rules extends JFrame implements ActionListener {
         // Change cursor to hand pointer on hover
         start.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
+        // Define what happens after closing the frame
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(650, 650); // Adjust size of frame(width, height)
         setLocation(300, 80); // Adjust position of frame (left,right)
         setVisible(true); // By default, JFrame is invisible
 
     }
-    
-    
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -117,8 +120,17 @@ public class Rules extends JFrame implements ActionListener {
             // Hide current frame
             setVisible(false);
 
+            // Get the date and time when user starts the game
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            String formattedDate = currentDate.format(dateFormatter);
+
+            LocalTime currentTime = LocalTime.now();
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+            String formattedTime = currentTime.format(timeFormatter);
+
             // Show Quiz frame
-            new Quiz(username);
+            new Quiz(username, formattedDate, formattedTime);
 
         } else {
             // Make current frame hidden

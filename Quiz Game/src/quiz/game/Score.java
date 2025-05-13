@@ -9,8 +9,7 @@ public class Score extends JFrame implements ActionListener{
     // Global instance variables
     String username;
     int totalScore;
-    JButton playAgainBtn;
-    
+    JButton playAgainBtn, scoreHistoryBtn;    
     // Default Constructor
     Score(String username, int totalScore){
         
@@ -30,6 +29,9 @@ public class Score extends JFrame implements ActionListener{
         
         // Create button
         createButton();
+        
+        // Define what happens after closing the frame
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // Make the frame visible
         setVisible(true);
@@ -83,7 +85,7 @@ public class Score extends JFrame implements ActionListener{
     private void createButton(){
         // Create submit button
         playAgainBtn=new JButton("Play Again");
-        playAgainBtn.setBounds(295,400,230,50);
+        playAgainBtn.setBounds(150,400,230,50);
         playAgainBtn.setFont(new Font("Arial",Font.BOLD,24));
         playAgainBtn.setBackground(new Color(30,144,255)); //Blue
         playAgainBtn.setForeground(new Color(30,144,255)); // Button text color
@@ -96,6 +98,22 @@ public class Score extends JFrame implements ActionListener{
         // Add event to button
         playAgainBtn.addActionListener(this);
         add(playAgainBtn);
+        
+        // Create submit button
+        scoreHistoryBtn=new JButton("Score History");
+        scoreHistoryBtn.setBounds(450,400,230,50);
+        scoreHistoryBtn.setFont(new Font("Arial",Font.BOLD,24));
+        scoreHistoryBtn.setBackground(new Color(30,144,255)); //Blue
+        scoreHistoryBtn.setForeground(new Color(30,144,255)); // Button text color
+        scoreHistoryBtn.setContentAreaFilled(true); // Allow custom background to render
+        scoreHistoryBtn.setOpaque(true);
+        
+        // Change cursor to hand pointer on hover
+        scoreHistoryBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        // Add event to button
+        scoreHistoryBtn.addActionListener(this);
+        add(scoreHistoryBtn);
     }
     
     // Method to handle event
@@ -108,6 +126,13 @@ public class Score extends JFrame implements ActionListener{
             
             // Show Login frame and reset the game
             new Login();
+        }
+        else if(ae.getSource()==scoreHistoryBtn){
+            // Hide current (score) frame
+            setVisible(false);
+            
+            // Show score history frame
+            new ScoreHistory();
         }
     }
     
